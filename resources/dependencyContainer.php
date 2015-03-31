@@ -64,13 +64,12 @@ $deps["mongoDm"] = $deps->share(function ($deps) {
 
     try {
         $client = $deps["mongoClient"];
+        /** Instantiate and return the document manager */
+        return \Doctrine\ODM\MongoDB\DocumentManager::create(
+            new \Doctrine\MongoDB\Connection($client),
+            $config
+        );
     } catch (\MongoConnectionException $e) {
         throw new \RuntimeException("Database unavailable");
     }
-    
-    /** Instantiate and return the document manager */
-    return \Doctrine\ODM\MongoDB\DocumentManager::create(
-        new \Doctrine\MongoDB\Connection($deps["mongoClient"]),
-        $config
-    );
 });
