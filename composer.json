@@ -1,6 +1,7 @@
 {
     "name": "breaker1/pasteshare",
     "description": "A PHP/Javascript pastebin alternative with full client-side AES-256 encryption support.",
+    "license": "MIT",
     "autoload": {
         "psr-4": {
             "pasteshare\\": [
