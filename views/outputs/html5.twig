@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block headTop %}{% endblock %}
+        <meta charset="utf-8" />
+        <title>{% block pageTitle %}{% endblock %}</title>
+        {% block headMiddle %}{% endblock %}
+        {% block headBottom %}{% endblock %}
+    </head>
+    
+    <body>
+        {% block body %}{% endblock %}
+        {% block extraJs%}{% endblock %}
+    </body>
+    
+</html>

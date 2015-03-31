@@ -1,0 +1,12 @@
+{
+    "name": "pastecode",
+    "dependencies": {
+        "bootstrap":        "*",
+        "codemirror":       "*",
+        "forge":            "*",
+        "bootstrap":        "*",
+        "bootstrap-toggle": "*",
+        "bootstrap-select": "*",
+        "fontawesome":      "*"
+    }
+}

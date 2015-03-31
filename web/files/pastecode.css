@@ -1,0 +1,16 @@
+#editorBox {
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    padding: 0 !important;
+}
+#sideContainer {
+    position: absolute;
+    bottom: 0;
+    height: 100%;
+    border-left: 6px solid rgba(0,83,159,0.65); color: #333;
+    background: #f8f8f8;
+}
+.CodeMirror {
+    background-image: none !important;
+}

@@ -1,0 +1,35 @@
+{
+    "autoload": {
+        "psr-4": {
+            "pasteshare\\": [
+                "classes/pasteshare/",
+                "models/pasteshare/"
+            ]
+        }
+    },
+    "require": {
+        "silex/silex":                  "~1",
+        "twig/twig":                    "~1",
+        "twig/extensions":              "~1",
+        "doctrine/common":              "~2",
+        "doctrine/dbal":                "~2",
+        "doctrine/mongodb":             "~1",
+        "doctrine/mongodb-odm":         "*@dev",
+        "filp/whoops":                  "~1",
+        "swiftmailer/swiftmailer":      "~5",
+        "yohang/dependency-tools":      "~1"
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Yohang\\DependencyTools::installDeps"
+        ],
+        "post-update-cmd": [
+            "Yohang\\DependencyTools::installDeps"
+        ]
+    },
+    "extra": {
+        "dependency-tools": {
+            "bower": true
+        }
+    }
+}

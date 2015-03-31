@@ -1,0 +1,22 @@
+{
+    "frontend": {
+        "output": "html5",
+        "layout": "nemoy",
+        "cacheDir": "/tmp/twig"
+    },
+    "application": {
+        "mode": "development",
+        "debug": true,
+        "timezone": ""
+    },
+    "paths": {
+        "app_root": ""
+    },
+    "mongoDb": {
+        "server": ["localhost"],
+        "replicaSet": "",
+        "database": "pasteshare",
+        "connectTimeoutMS": "50",
+        "socketTimeoutMS": "50"
+    }
+}

@@ -1,0 +1,165 @@
+{% extends "/layouts/" ~ layout ~ ".twig" %}
+
+{% block pageTitle %}Pasteshare{% endblock %}
+
+{% block content %}
+    <div class="wrapper">
+        <div class="col-md-10" id="editorBox">
+            <textarea id="editor" class="form-control" name="body">{{ paste.contents }}</textarea>
+        </div>
+        <div class="col-md-offset-10 col-md-2" id="sideContainer">
+            <h1>Pasteshare</h1>
+            
+            <input type="hidden" id="mode" value="{% if paste is defined %}view{% else %}new{% endif %}" />
+            
+            {% if paste is defined and paste.encrypted %}
+                <div id="encryptedModal" tabindex="-1" role="dialog" aria-hidden="true" aria-labelledby="encryptedModalTitle" class="modal fade">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true" class="fa fa-times"></span>
+                                </button>
+                                <h4 class="modal-title" id="encryptedModalTitle">Decrypt Paste</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>This paste is encrypted, please enter the key below to decrypt.</p>
+                                <form>
+                                    <div class="form-group">
+                                        <textarea class="form-control" id="decryptionKey"></textarea>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" id="decryptButton">
+                                    <span class="fa fa-unlock"></span>
+                                    Decrypt
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <strong>Paste Controls</strong>
+                </div>
+                <div class="panel-body" id="controlsBody">
+                    <form class="form form-horizontal">
+                        <div class="form-group">
+                            <label for="language" class="control-label col-sm-3">Language</label>
+                            <div class="col-sm-9">
+                                {% if paste is defined %}
+                                    <p class="form-control-static">{{ paste.language|capitalize }}</p>
+                                {% else %}
+                                    <select name="language" id="language" class="form-control selectpicker">
+                                        <option value="javascript">Javascript</option>
+                                    </select>
+                                {% endif %}
+                                
+                            </div>
+                        </div>
+                        
+                        {% if paste is defined %}
+                            <div class="form-group">
+                                <label class="control-label col-sm-3">Created</label>
+                                <div class="col-sm-9">
+                                    <p class="form-control-static">{{ paste.created|date}}</p>
+                                </div>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="form-group">
+                            <label for="expiration" class="control-label col-sm-3">Expires</label>
+                            <div class="col-sm-9">
+                                {% if paste is defined %}
+                                    <p class="form-control-static">{{ paste.expires|date }}</p>
+                                {% else %}
+                                    <select name="expiration" id="expiration" class="form-control selectpicker">
+                                        <option>30 minutes</option>
+                                        <option>1 hour</option>
+                                        <option>8 hours</option>
+                                        <option>1 day</option>
+                                        <option>5 days</option>
+                                        <option>1 week</option>
+                                        <option>1 month</option>
+                                        <option>Never</option>
+                                    </select>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="visible" class="control-label col-sm-3">Publicly Visible</label>
+                            <div class="col-sm-9">
+                                {% if paste is defined%}
+                                    <p class="form-control-static">{% if paste.visible %}Yes{% else %}No{% endif %}</p>
+                                {% else %}
+                                    <input type="checkbox" name="visible" id="visible" class="form-control" data-toggle="toggle" data-size="small" data-on="Yes" data-off="No" />
+                                {% endif %}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            {% if paste is defined %}
+                {% if paste.encrypted %}
+                    <input type="hidden" id="decryptionIV" value="{{ paste.iv}}" />
+                    <button class="btn btn-primary form-control" id="showDecryptModalButton">
+                        <span class="fa fa-unlock"></span>
+                        Decrypt Paste
+                    </button>
+                {% endif %}
+            {% else %}
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <label for="encryption">Encryption</label> 
+                        <input type="checkbox" name="encryption" id="encryption" data-toggle="toggle" data-size="small"
+                            {% if paste is defined %}
+                                {% if paste.encrypted %} checked="checked"{% endif %}
+                            {% endif %}
+                        />
+                    </div>
+                    <div class="panel-body" id="encryptionSection">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="key" class="control-label col-sm-2">Key</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="key" rows="10"></textarea>
+                                    <input type="hidden" id="iv" name="iv" />
+                                </div>
+                            </div>
+                            <span class="label label-warning">Copy the key before you hit save!</span>
+                        </form>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary col-sm-12" id="saveButton">Save</button>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block extraJs %}
+    <link rel="stylesheet" href="/files/pastecode.css" />
+    <link rel="stylesheet" href="/files/codemirror/lib/codemirror.css" />
+    <link rel="stylesheet" href="/files/codemirror/theme/mdn-like.css" />
+    <link rel="stylesheet" href="/files/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/files/bootstrap-select/css/bootstrap-select.min.css" />
+    <link rel="stylesheet" href="/files/bootstrap-toggle/css/bootstrap-toggle.min.css" />
+    <link rel="stylesheet" href="/files/fontawesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="/files/codemirror/addon/scroll/simplescrollbars.css" />
+    <script type="text/javascript" src="/files/forge/forge.min.js"></script>
+    <script type="text/javascript" src="/files/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="/files/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/files/bootstrap-select/js/bootstrap-select.min.js"></script>
+    <script type="text/javascript" src="/files/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" src="/files/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="/files/codemirror/addon/scroll/simplescrollbars.js"></script>
+    <script type="text/javascript" src="/files/codemirror/mode/javascript/javascript.js"></script>
+    <script type="text/javascript" src="/files/codemirror/addon/selection/active-line.js"></script>
+    <script type="text/javascript" src="/files/codemirror/addon/edit/matchbrackets.js"></script>
+    <script type="text/javascript" src="/files/pasteshare.js"></script>
+{% endblock %}
