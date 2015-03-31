@@ -14,7 +14,7 @@ A PHP/Javascript pastebin alternative with full client-side AES-256 encryption s
 2. Run composer install
 3. Run bower install
 4. cd into `bower_components/forge`
-4.1 run `npm install`
-4.2 run `npm run minify`
+  1. run `npm install`
+  2. run `npm run minify`
 4. Change settings in `configs/site.json` to be appropriate for your site/circumstances
 
