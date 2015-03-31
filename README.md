@@ -1,5 +1,6 @@
 # pasteshare
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/15563174-c9f0-43b4-8d36-282293f30055/mini.png)](https://insight.sensiolabs.com/projects/15563174-c9f0-43b4-8d36-282293f30055)
+
 A PHP/Javascript pastebin alternative with full client-side AES-256 encryption support.
 
 # Requirements
