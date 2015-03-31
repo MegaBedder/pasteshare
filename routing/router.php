@@ -1,7 +1,6 @@
 <?php
 /**
  * This file contains the route definitions for the pasteshare application
- * @todo Move actions to a controller
  */
 $router = $app["controllers_factory"];
 
