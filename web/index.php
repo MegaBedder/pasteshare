@@ -5,12 +5,6 @@
  */
 
 /**
- * Declare the namespaces we'll be using
- */
-use Whoops\Provider\Silex\WhoopsServiceProvider;
-use Silex\Provider;
-
-/**
  * Bootstrap this application
  */
 $app = include(__dir__ . "/../bootstrap.php");
