@@ -17,8 +17,11 @@
         "doctrine/common":              "~2",
         "doctrine/dbal":                "~2",
         "doctrine/mongodb":             "~1",
-        "doctrine/mongodb-odm":         "dev-master",
+        "doctrine/mongodb-odm":         "1.0.*@dev",
         "filp/whoops":                  "~1",
         "swiftmailer/swiftmailer":      "~5"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer":    "~2"
     }
 }
