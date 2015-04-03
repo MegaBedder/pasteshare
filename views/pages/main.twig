@@ -8,7 +8,7 @@
             <textarea id="editor" class="form-control" name="body">{{ paste.contents }}</textarea>
         </div>
         <div class="col-md-offset-10 col-md-2" id="sideContainer">
-            <h1>Pasteshare</h1>
+            <h1><a href="{{ app.generate("new") }}">Pasteshare</a></h1>
             
             <input type="hidden" id="mode" value="{% if paste is defined %}view{% else %}new{% endif %}" />
             
@@ -51,10 +51,13 @@
                             <label for="language" class="control-label col-sm-3">Language</label>
                             <div class="col-sm-9">
                                 {% if paste is defined %}
-                                    <p class="form-control-static">{{ paste.language|capitalize }}</p>
+                                    <p class="form-control-static">{{ language.name }}</p>
+                                    <input type="hidden" name="language" id="language" value="{{ language.mode }}" />
                                 {% else %}
-                                    <select name="language" id="language" class="form-control selectpicker">
-                                        <option value="javascript">Javascript</option>
+                                    <select name="language" id="language" class="form-control">
+                                        {% for language in languages%}
+                                            <option value="{{ language.mode }}">{{ language.name }}</option>
+                                        {% endfor %}
                                     </select>
                                 {% endif %}
                                 
@@ -76,7 +79,7 @@
                                 {% if paste is defined %}
                                     <p class="form-control-static">{{ paste.expires|date }}</p>
                                 {% else %}
-                                    <select name="expiration" id="expiration" class="form-control selectpicker">
+                                    <select name="expiration" id="expiration" class="form-control">
                                         <option>30 minutes</option>
                                         <option>1 hour</option>
                                         <option>8 hours</option>
@@ -147,19 +150,21 @@
     <link rel="stylesheet" href="/files/codemirror/lib/codemirror.css" />
     <link rel="stylesheet" href="/files/codemirror/theme/mdn-like.css" />
     <link rel="stylesheet" href="/files/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/files/bootstrap-select/css/bootstrap-select.min.css" />
     <link rel="stylesheet" href="/files/bootstrap-toggle/css/bootstrap-toggle.min.css" />
     <link rel="stylesheet" href="/files/fontawesome/css/font-awesome.min.css" />
     <link rel="stylesheet" href="/files/codemirror/addon/scroll/simplescrollbars.css" />
     <script type="text/javascript" src="/files/forge/forge.min.js"></script>
     <script type="text/javascript" src="/files/jquery/jquery.min.js"></script>
     <script type="text/javascript" src="/files/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="/files/bootstrap-select/js/bootstrap-select.min.js"></script>
     <script type="text/javascript" src="/files/bootstrap-toggle/js/bootstrap-toggle.min.js"></script>
+    <script type="text/javascript" src="/files/mustache.js/mustache.min.js"></script>
     <script type="text/javascript" src="/files/codemirror/lib/codemirror.js"></script>
     <script type="text/javascript" src="/files/codemirror/addon/scroll/simplescrollbars.js"></script>
+    <script type="text/javascript" src="/files/codemirror/mode/meta.js"></script>
     <script type="text/javascript" src="/files/codemirror/mode/javascript/javascript.js"></script>
     <script type="text/javascript" src="/files/codemirror/addon/selection/active-line.js"></script>
     <script type="text/javascript" src="/files/codemirror/addon/edit/matchbrackets.js"></script>
+    <script type="text/javascript" src="/files/codemirror/addon/mode/loadmode.js"></script>
+    <script type="text/javascript" src="/files/sticky-store/sticky.js"></script>
     <script type="text/javascript" src="/files/pasteshare.js"></script>
 {% endblock %}

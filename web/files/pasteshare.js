@@ -1,11 +1,10 @@
 /**
  * Javascript to control the pasteshare application interface
- * 
+ *
  * @author Anthony Vitacco anthony@littlegno.me
  * @license MIT
  */
-var pasteshare = function ()
-{
+var pasteshare = function () {
     /** @property object The code mirror editor reference */
     var editor;
     
@@ -18,22 +17,26 @@ var pasteshare = function ()
     /** @property The key for the encryption */
     var key;
     
+    /** @property The local information storage */
+    var store;
+    
     /**
      * This is the function that gets run when the page is first hit. It
      * basically wires the page up and provides the glue logic for everything.
      */
-    this.init = function()
-    {
+    this.init = function () {
+        /**
+         * Initialize the local storage
+         */
+        this.store = new StickyStore({});
+        
         /**
          * Initialize the page and set
          */
         this.toggleEncryptionSection(0);
-        $("#encryption").change(function(){ pasteshare.setEncryption($("#encryption").prop("checked")); });
-        
-        /**
-         * Style the drop downs with the select picker widgetgg
-         */
-        $(".selectpicker").selectpicker();
+        $("#encryption").change(function () {
+            pasteshare.setEncryption($("#encryption").prop("checked"));
+        });
         
         /**
          * Initialize the code mirror editor
@@ -55,29 +58,44 @@ var pasteshare = function ()
         this.setEditorHeight();
         
         /**
+         * Autoload new mode file and change mode when language is changed
+         */
+        $("#language").change(function (ev) {
+            var language = $("#language").val();
+            CodeMirror.modeURL = "/files/codemirror/mode/%N/%N.js";
+            window.pasteshare.editor.setOption("mode", language);
+            CodeMirror.autoLoadMode(window.pasteshare.editor, language);
+        });
+        
+        /**
          * Bind the save paste function to the save button
          */
-        $("#saveButton").click(function () {window.pasteshare.savePaste()});
+        $("#saveButton").click(function () {
+            window.pasteshare.savePaste()
+        });
         
         /**
          * Bind events for displaying an encrypted paste
          */
         if ($("#mode").val() == "view") {
             this.editor.setOption("readOnly", true);
+            $("#language").change();
         }
         $("#encryptedModal").modal("show");
-        $("#showDecryptModalButton").click(function (){
+        $("#showDecryptModalButton").click(function () {
             $("#encryptedModal").modal("show");
         });
-        $("#decryptButton").click(function () {window.pasteshare.decryptPaste()});
+        $("#decryptButton").click(function () {
+            window.pasteshare.decryptPaste()
+        });
+        
     }
     
     /**
      * The codemirror height is static which is annoying and ugly, this function
      * will set it to the hight of the window so it looks right
      */
-    this.setEditorHeight = function ()
-    {
+    this.setEditorHeight = function () {
         /**
          * Set the height of the editor to the height of the window
          */
@@ -90,8 +108,7 @@ var pasteshare = function ()
      *
      * @param boolean state The state of the encryption to set
      */
-    this.setEncryption = function (state)
-    {
+    this.setEncryption = function (state) {
         this.encryptPaste = state;
         this.toggleEncryptionSection();
     }
@@ -102,8 +119,7 @@ var pasteshare = function ()
      *
      * @param int duration Optional, defaults to 300 (ms)
      */
-    this.toggleEncryptionSection = function (duration = 300)
-    {
+    this.toggleEncryptionSection = function (duration = 300) {
         if (this.encryptPaste) {
             this.startEncryption();
             $("#encryptionSection").show(duration);
@@ -118,8 +134,7 @@ var pasteshare = function ()
      * Generate a 32-bit key and initialization vector and inject them into the
      * page
      */
-    this.startEncryption = function ()
-    {
+    this.startEncryption = function () {
         this.key = forge.random.getBytesSync(32);
         this.iv = forge.random.getBytesSync(32);
         
@@ -131,8 +146,7 @@ var pasteshare = function ()
      * Unset the encryption key and initialization vector and remove them from
      * the page
      */
-    this.stopEncryption = function ()
-    {
+    this.stopEncryption = function () {
         this.key = null;
         this.iv = null;
         
@@ -146,8 +160,7 @@ var pasteshare = function ()
      * Post the paste contents to the back end and redirect to the correct page
      * after the result is returned.
      */
-    this.savePaste = function ()
-    {
+    this.savePaste = function () {
         /** Define the post hash, we'll need it */
         var post = {};
         
@@ -186,8 +199,7 @@ var pasteshare = function ()
      * Attempt to decrypt the paste with the given key and set the editor
      * contents to the decrypted version.
      */
-    this.decryptPaste = function ()
-    {
+    this.decryptPaste = function () {
         /**
          * Recreate the Key and IV from stored values
          */
@@ -218,6 +230,67 @@ var pasteshare = function ()
     }
     
     /**
+     *
+     */
+    this.addRecentLanguage = function (language) {
+        list = this.store.get("recentLanguages");
+        
+        // Avoid adding duplicate languages
+        for (key in list) {
+            if (list[key].mode == language) {
+                return;
+            }
+        }
+        
+        if (!list) {
+            list = [];
+        }
+        var langDetails = {"mode": language, "name": this.getLanguageName(language)};
+        list.unshift(langDetails);
+        
+        if (list.length > 5) {
+            list.pop();
+        }
+        
+        this.store.set("recentLanguages", list);
+    }
+    
+    /**
+     *
+     */
+    this.getRecentLanguages = function () {
+        return this.store.get("recentLanguages");
+    }
+    
+    /**
+     *
+     */
+    this.getLanguagesList = function () {
+        recent = this.getRecentLanguages();
+        data = {
+            recent: recent,
+            modes: CodeMirror.modeInfo
+        };
+        var fiveRecent = Mustache.render('<optgroup label="Recent">{{#recent}}<option value="{{ mode}}">{{ name }}</option>{{/recent}}</optgroup>', data);
+        var allLanguages = Mustache.render('<optgroup label="All Languages">{{#modes}}<option value="{{ mode }}">{{ name }}</option>{{/modes}}</optgroup>', data);
+        options = fiveRecent + allLanguages;
+        $("#language").html(options);
+    }
+    
+    /**
+     *
+     */
+    this.getLanguageName = function (language) {
+        languages = CodeMirror.modeInfo;
+        for (key in languages) {
+            if (languages[key].mode == language) {
+                return languages[key].name;
+            }
+        }
+        return false;
+    }
+    
+    /**
      * Run the init function for this object when it's loaded
      */
     $(document).ready(this.init.bind(this));
@@ -226,6 +299,6 @@ var pasteshare = function ()
 /**
  * Run the stinking thing!
  */
-$(document).ready(function (){
+$(document).ready(function () {
     window.pasteshare = new pasteshare();
 });

@@ -92,6 +92,7 @@ class PasteShare
         
         $options = $this->app["options"];
         $options["paste"] = $paste->toArray();
+        $options["language"] = $this->getLanguagesFromCodeMirror()[$paste->language];
         return $this->app->render("pages/main.twig", $options);
     }
     
@@ -113,7 +114,7 @@ class PasteShare
         foreach ($languages[0] as $language) {
             preg_match("/name:\s\"(.+?)\"/", $language, $name);
             preg_match("/mode:\s\"(.+?)\"/", $language, $mode);
-            $return[] = [
+            $return[$mode[1]] = [
                 "name" => $name[1],
                 "mode" => $mode[1]
             ];
