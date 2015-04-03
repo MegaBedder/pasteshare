@@ -49,11 +49,6 @@ class PasteShare
             $dm = $this->app["deps"]["mongoDm"];
             $timezone = new \DateTimeZone($this->app["deps"]["siteConfig"]->application->timezone);
             $paste = new \pasteshare\Paste();
-            $paste->visible = false;
-            
-            if ($request->get("visible") == "true") {
-                $paste->visible = true;
-            }
             
             if ($request->get("encrypted")) {
                 $paste->encrypted = true;

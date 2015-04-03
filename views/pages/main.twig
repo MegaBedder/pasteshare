@@ -92,17 +92,6 @@
                                 {% endif %}
                             </div>
                         </div>
-                        
-                        <div class="form-group">
-                            <label for="visible" class="control-label col-sm-3">Publicly Visible</label>
-                            <div class="col-sm-9">
-                                {% if paste is defined%}
-                                    <p class="form-control-static">{% if paste.visible %}Yes{% else %}No{% endif %}</p>
-                                {% else %}
-                                    <input type="checkbox" name="visible" id="visible" class="form-control" data-toggle="toggle" data-size="small" data-on="Yes" data-off="No" />
-                                {% endif %}
-                            </div>
-                        </div>
                     </form>
                 </div>
             </div>

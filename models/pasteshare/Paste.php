@@ -16,9 +16,6 @@ class Paste implements \JsonSerializable
     private $uniqid;
     
     /** @ODM\Field(type="boolean") */
-    private $visible = false;
-    
-    /** @ODM\Field(type="boolean") */
     private $encrypted = false;
     
     /** @ODM\Field(type="string") */
@@ -88,7 +85,6 @@ class Paste implements \JsonSerializable
         return [
             "id" => $this->id,
             "uniqid" => $this->uniqid,
-            "visible" => $this->visible,
             "encrypted" => $this->encrypted,
             "iv" => $this->iv,
             "language" => $this->language,
