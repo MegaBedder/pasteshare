@@ -8,7 +8,7 @@
             <textarea id="editor" class="form-control" name="body">{{ paste.contents }}</textarea>
         </div>
         <div class="col-md-offset-10 col-md-2" id="sideContainer">
-            <h1><a href="{{ app.generate("new") }}">Pasteshare</a></h1>
+            <h1><a href="{{ app.url_generator.generate("new") }}">Pasteshare</a></h1>
             
             <input type="hidden" id="mode" value="{% if paste is defined %}view{% else %}new{% endif %}" />
             
