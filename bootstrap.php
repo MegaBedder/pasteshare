@@ -53,6 +53,11 @@ $app->register(new Silex\Provider\TwigServiceProvider(), [
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 
 /**
+ * Instantiate and register the Silex Controller as a Service Provider
+ */
+$app->register(new Silex\Provider\ServiceControllerServiceProvider());
+
+/**
  * Use Whoops if we're in debug mode
  */
 if ($app["options"]["debug"]) {

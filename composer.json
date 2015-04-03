@@ -6,6 +6,7 @@
         "psr-4": {
             "pasteshare\\": [
                 "classes/pasteshare/",
+                "controllers/pasteshare/",
                 "models/pasteshare/"
             ]
         }
@@ -17,7 +18,7 @@
         "doctrine/common":              "~2",
         "doctrine/dbal":                "~2",
         "doctrine/mongodb":             "~1",
-        "doctrine/mongodb-odm":         "1.0.*@dev",
+        "doctrine/mongodb-odm":         "~1@dev",
         "filp/whoops":                  "~1",
         "swiftmailer/swiftmailer":      "~5"
     },
