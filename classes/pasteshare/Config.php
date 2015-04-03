@@ -7,7 +7,7 @@ namespace pasteshare;
 
 /**
  * Generic config class.
- * 
+ *
  * This class will load a json file and store the contents of that file at a
  * global scope in a variable called settings. It has a magic get function
  * which allows variables to be read out of the stored information.
@@ -23,7 +23,7 @@ class Config
      * Instantation function
      * This function will load the json file into memory specified by the first
      * parameter
-     * 
+     *
      * @param string $file The path to the config file. May be relative or full
      * @param boolean $asArray Whether to prefer an array data structure or an object (optional, default: false)
      * @throws RuntimeException When the specified file doesn't exist
@@ -52,7 +52,7 @@ class Config
     /**
      * Magic get function
      * This function will return requested information from the settings var
-     * 
+     *
      * @param string $what The requested information
      * @return mixed Returns the requested config information or false
      * @example $config->something
@@ -73,7 +73,7 @@ class Config
      * This function allows for just getting the whole config variable as one
      * big variable return. Mostly used for getting database configs as an
      * array.
-     * 
+     *
      * @return mixed The whole config as one return
      */
     public function getAll()
