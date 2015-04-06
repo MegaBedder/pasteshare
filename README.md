@@ -3,6 +3,9 @@
 
 A PHP/Javascript pastebin alternative with full client-side AES-256 encryption support.
 
+# Demo
+A working demo is available at [http://pasteshare.avitac.co](http://pasteshare.avitac.co)
+
 # Requirements
 * PHP 5.4+
 * MongoDB Server
@@ -16,5 +19,4 @@ A PHP/Javascript pastebin alternative with full client-side AES-256 encryption s
 4. cd into `bower_components/forge`
   1. run `npm install`
   2. run `npm run minify`
-4. Change settings in `configs/site.json` to be appropriate for your site/circumstances
-
+5. Change settings in `configs/site.json` to be appropriate for your site/circumstances
