@@ -4,8 +4,9 @@
         "bootstrap":        "*",
         "codemirror":       "*",
         "forge":            "*",
+        "sticky-store":     "*",
         "bootstrap":        "*",
         "bootstrap-toggle": "*",
-        "fontawesome":      "*",
+        "fontawesome":      "*"
     }
 }
