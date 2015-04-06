@@ -183,7 +183,7 @@ var pasteshare = function () {
         /** Build the rest of the post hash */
         post.contents = editorValue;
         post.language = $("#language").val();
-        post.expiration = $("#expiration").val();
+        post.expires = $("#expiration").val();
         
         $.post("/save", post, function (data) {
             if (data.status == 403) {
