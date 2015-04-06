@@ -231,63 +231,63 @@ var pasteshare = function () {
     /**
      *
      */
-    this.addRecentLanguage = function (language) {
-        list = this.store.get("recentLanguages");
-        
-        // Avoid adding duplicate languages
-        for (key in list) {
-            if (list[key].mode == language) {
-                return;
-            }
-        }
-        
-        if (!list) {
-            list = [];
-        }
-        var langDetails = {"mode": language, "name": this.getLanguageName(language)};
-        list.unshift(langDetails);
-        
-        if (list.length > 5) {
-            list.pop();
-        }
-        
-        this.store.set("recentLanguages", list);
-    }
-    
-    /**
-     *
-     */
-    this.getRecentLanguages = function () {
-        return this.store.get("recentLanguages");
-    }
-    
-    /**
-     *
-     */
-    this.getLanguagesList = function () {
-        recent = this.getRecentLanguages();
-        data = {
-            recent: recent,
-            modes: CodeMirror.modeInfo
-        };
-        var fiveRecent = Mustache.render('<optgroup label="Recent">{{#recent}}<option value="{{ mode}}">{{ name }}</option>{{/recent}}</optgroup>', data);
-        var allLanguages = Mustache.render('<optgroup label="All Languages">{{#modes}}<option value="{{ mode }}">{{ name }}</option>{{/modes}}</optgroup>', data);
-        options = fiveRecent + allLanguages;
-        $("#language").html(options);
-    }
-    
-    /**
-     *
-     */
-    this.getLanguageName = function (language) {
-        languages = CodeMirror.modeInfo;
-        for (key in languages) {
-            if (languages[key].mode == language) {
-                return languages[key].name;
-            }
-        }
-        return false;
-    }
+    //this.addRecentLanguage = function (language) {
+    //    list = this.store.get("recentLanguages");
+    //    
+    //    // Avoid adding duplicate languages
+    //    for (key in list) {
+    //        if (list[key].mode == language) {
+    //            return;
+    //        }
+    //    }
+    //    
+    //    if (!list) {
+    //        list = [];
+    //    }
+    //    var langDetails = {"mode": language, "name": this.getLanguageName(language)};
+    //    list.unshift(langDetails);
+    //    
+    //    if (list.length > 5) {
+    //        list.pop();
+    //    }
+    //    
+    //    this.store.set("recentLanguages", list);
+    //}
+    //
+    ///**
+    // *
+    // */
+    //this.getRecentLanguages = function () {
+    //    return this.store.get("recentLanguages");
+    //}
+    //
+    ///**
+    // *
+    // */
+    //this.getLanguagesList = function () {
+    //    recent = this.getRecentLanguages();
+    //    data = {
+    //        recent: recent,
+    //        modes: CodeMirror.modeInfo
+    //    };
+    //    var fiveRecent = Mustache.render('<optgroup label="Recent">{{#recent}}<option value="{{ mode}}">{{ name }}</option>{{/recent}}</optgroup>', data);
+    //    var allLanguages = Mustache.render('<optgroup label="All Languages">{{#modes}}<option value="{{ mode }}">{{ name }}</option>{{/modes}}</optgroup>', data);
+    //    options = fiveRecent + allLanguages;
+    //    $("#language").html(options);
+    //}
+    //
+    ///**
+    // *
+    // */
+    //this.getLanguageName = function (language) {
+    //    languages = CodeMirror.modeInfo;
+    //    for (key in languages) {
+    //        if (languages[key].mode == language) {
+    //            return languages[key].name;
+    //        }
+    //    }
+    //    return false;
+    //}
     
     /**
      * Run the init function for this object when it's loaded
