@@ -119,7 +119,10 @@ var pasteshare = function () {
      *
      * @param int duration Optional, defaults to 300 (ms)
      */
-    this.toggleEncryptionSection = function (duration = 300) {
+    this.toggleEncryptionSection = function (duration) {
+        if (duration == null) {
+            duration = 300;
+        }
         if (this.encryptPaste) {
             this.startEncryption();
             $("#encryptionSection").show(duration);
