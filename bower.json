@@ -6,7 +6,6 @@
         "forge":            "*",
         "bootstrap":        "*",
         "bootstrap-toggle": "*",
-        "bootstrap-select": "*",
-        "fontawesome":      "*"
+        "fontawesome":      "*",
     }
 }
