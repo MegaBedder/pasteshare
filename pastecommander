@@ -1,0 +1,34 @@
+#!/usr/bin/env php
+<?php
+/**
+ * Import the autoloader and dependency container
+ */
+require(__dir__ . "/vendor/autoload.php");
+require(__dir__ . "/resources/dependencyContainer.php");
+
+/**
+ * Set the default timezone so we don't get warnings about it, regardless of
+ * what is contained in the php.ini file
+ */
+date_default_timezone_set($deps["siteConfig"]->application->timezone);
+
+/**
+ * Declare the namespaces we'll be using
+ */
+use Symfony\Component\Console\Application;
+use pasteshare\ExpiredPasteDelete;
+
+/**
+ * Instantiate the application
+ */
+$app = new Application("pastecommander", "1.0");
+
+/**
+ * Add the commands to the application
+ */
+$app->add(new ExpiredPasteDelete($deps));
+
+/**
+ * Run the application
+ */
+$app->run();
