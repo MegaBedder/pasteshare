@@ -61,7 +61,8 @@ class ExpiredPasteDelete extends Command
         if ($input->getOption("dry-run")) {
             $pastes = $dm->createQueryBuilder("pasteshare\Paste")
                 ->eagerCursor(true)
-                ->field("expires")->lte($currentDateTime)
+                ->field("expires")->eq(true)
+                ->field("expiration")->lte($currentDateTime)
                 ->getQuery()
                 ->execute();
             
