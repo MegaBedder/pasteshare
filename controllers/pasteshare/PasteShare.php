@@ -92,7 +92,9 @@ class PasteShare
     }
     
     /**
+     * This helper function parses the mode info from CodeMirror's mode/meta.js
      *
+     * @return array The language information from mode/meta.js
      */
     private function getLanguagesFromCodeMirror()
     {

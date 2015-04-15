@@ -1,17 +1,28 @@
 <?php
+/**
+ * This file contains the command class to delete expired pastes for pasteshare
+ * @license MIT
+ */
 namespace pasteshare;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * This class can delete expired pastes from the database for pasteshare
+ *
+ * @author Anthony Vitacco <anthony@littlegno.me>
+ */
 class ExpiredPasteDelete extends Command
 {
     /** @var object An instance of our dependency container */
     private $deps;
     
     /**
+     * Magic construct function
      *
+     * @param object $deps The dependency container
      */
     public function __construct($deps)
     {
@@ -20,7 +31,7 @@ class ExpiredPasteDelete extends Command
     }
     
     /**
-     *
+     * Configure the options for the command
      */
     protected function configure()
     {
@@ -30,7 +41,10 @@ class ExpiredPasteDelete extends Command
     }
     
     /**
+     * What to do when then command is executed
      *
+     * @param object $input The Input Interface instance
+     * @param object $output The Output Interface instance
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
