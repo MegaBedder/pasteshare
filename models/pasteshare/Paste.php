@@ -30,8 +30,11 @@ class Paste implements \JsonSerializable
     /** @ODM\Field(type="date") */
     private $created;
     
+    /** @ODM\Field(type="boolean") */
+    private $expires = false;
+    
     /** @ODM\Field(type="date") */
-    private $expires;
+    private $expiration;
     
     /**
      *
@@ -91,6 +94,7 @@ class Paste implements \JsonSerializable
             "contents" => $this->contents,
             "created" => $this->created,
             "expires" => $this->expires,
+            "expiration" => $this->expiration,
         ];
     }
 }

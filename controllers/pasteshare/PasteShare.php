@@ -58,7 +58,11 @@ class PasteShare
             $paste->language = $request->get("language");
             $paste->contents = $request->get("contents");
             $paste->created = new \DateTime("now", $timezone);
-            $paste->expires = new \DateTime($request->get("expires"), $timezone);
+            
+            if ($request->get("expires") != "Never") {
+                $paste->expires = true;
+                $paste->expiration = new \DateTime($request->get("expires"), $timezone);
+            }
             
             $dm->persist($paste);
             $dm->flush();

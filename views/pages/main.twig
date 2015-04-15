@@ -77,7 +77,14 @@
                             <label for="expiration" class="control-label col-sm-3">Expires</label>
                             <div class="col-sm-9">
                                 {% if paste is defined %}
-                                    <p class="form-control-static">{{ paste.expires|date }}</p>
+                                    <p class="form-control-static">
+                                    {% if paste.expires %}
+                                        {{ paste.expiration|date }}
+                                    {% else %}
+                                        Never
+                                    {% endif %}
+                                    </p>
+                                    
                                 {% else %}
                                     <select name="expiration" id="expiration" class="form-control">
                                         <option>30 minutes</option>
